@@ -7,7 +7,7 @@ func main() {
 	app := fiber.New()
 
 	// 添加一个路由处理函数，当访问根 URL ("/") 时调用
-	app.Get("/", func(c *fiber.Ctx) error {
+	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("Hello, Fiber!") // 发送响应到客户端
 	})
 

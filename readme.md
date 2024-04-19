@@ -1,28 +1,32 @@
 ```bash
-my-microservice/
+myapp/
 ├── cmd/
-│   └── myservice/
-│       └── main.go       # 程序入口点，启动服务器
+│   └── myapp/          # 主应用程序入口
+│       └── main.go
 ├── pkg/
-│   ├── config/
-│   │   └── config.go     # 配置相关代码，例如读取环境变量
-│   ├── api/
-│   │   ├── handler.go    # HTTP处理器，定义API端点逻辑
-│   │   └── middleware.go # HTTP中间件，如身份验证、日志等
-│   ├── service/
-│   │   └── service.go    # 业务逻辑层，实现具体的业务需求
-│   ├── repository/
-│   │   └── repository.go # 数据访问层，与数据库交互
-│   └── model/
-│       └── model.go      # 数据模型，定义结构体和方法
+│   ├── config/         # 配置相关代码
+│   │   └── config.go
+│   ├── logger/         # 日志库封装
+│   │   └── logger.go
+│   ├── api/            # API 控制器层
+│   │   └── handlers.go
+│   ├── service/        # 业务逻辑层
+│   │   └── service.go
+│   ├── repository/     # 数据访问层
+│   │   └── repository.go
+│   └── model/          # 数据模型定义
+│       └── models.go
 ├── internal/
-│   └── util/
-│       └── util.go       # 内部使用的实用工具函数
-├── migrations/
-│   └── 01_init_schema.sql # 数据库迁移脚本
-├── tests/
-│   ├── api_test.go       # API 测试
-│   └── service_test.go   # 服务层测试
-├── go.mod                # Go模块文件
-└── go.sum                # Go模块的依赖树
+│   └── util/           # 内部工具和帮助函数
+│       └── util.go
+├── config/
+│   └── app.yaml        # 外部配置文件
+├── migrations/         # 数据库迁移文件
+│   └── 01_init_schema.sql
+├── tests/              # 测试代码
+│   ├── api_test.go
+│   └── service_test.go
+├── go.mod              # Go 模块定义文件
+└── go.sum              # Go 模块的依赖项锁定文件
+
 ```
