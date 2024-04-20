@@ -1,14 +1,18 @@
 version: '3.8'
-
 services:
   lumi:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+    environment:
+      - LUMI_MYSQL_DSN
+      - LUMI_MONGO_DSN
+      - LUMI_MONGO_DB
+      - LUMI_MONGO_LOG_DB
     env_file:
       - .env
-    volumes:
-      - ./data:/app/data
-    restart: always
+    ports:
+      - "3000:3000"
+#    volumes:
+#      - ./data:/app/data
+    restart: unless-stopped
