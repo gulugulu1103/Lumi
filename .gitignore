@@ -22,3 +22,4 @@ go.work
 /pkg/sumdb/
 /pkg/mod/
 /.env
+/.air.toml

@@ -14,7 +14,7 @@ func init() {
 type User struct {
 	gorm.Model            // 内嵌 gorm.Model，包含 ID, CreatedAt, UpdatedAt, DeletedAt
 	Username   string     `gorm:"size:255;index:,unique,where:DeletedAt IS NULL"` // 用户名，唯一且不为空
-	Password   string     `gorm:"size:255"`                                       // 密码
+	Password   string     `gorm:"size:255" validate:"required,min=6,max=30"`      // 密码
 	Email      string     `gorm:"size:100;index:,unique,where:DeletedAt IS NULL"` // 电子邮箱，唯一且不为空
 	Avatar     *string    `gorm:"size:255"`                                       // 头像
 	IsActive   bool       `gorm:"default:true"`                                   // 是否激活

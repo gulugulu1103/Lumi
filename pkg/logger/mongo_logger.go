@@ -2,7 +2,7 @@ package logger
 
 import (
 	"context"
-	"encoding/json"
+	"github.com/bytedance/sonic"
 	"github.com/gofiber/fiber/v3/log"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
@@ -72,7 +72,7 @@ func (m *MongoSink) Close() error {
 
 func (m *MongoSink) Write(p []byte) (n int, err error) {
 	var document map[string]interface{}
-	if err = json.Unmarshal(p, &document); err != nil {
+	if err = sonic.Unmarshal(p, &document); err != nil {
 		log.Fatal("日志json反序列化失败: ", err.Error())
 		return 0, err
 	}
