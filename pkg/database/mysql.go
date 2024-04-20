@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"github.com/gofiber/fiber/v3/log"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
@@ -34,12 +35,12 @@ func init() {
 	// 加载环境变量
 	err := godotenv.Load()
 	if err != nil {
-		logger.Log.Warn("无法加载 .env 文件", zap.Error(err))
+		log.Warn("无法加载 .env 文件", zap.Error(err))
 	}
 
 	dsn := os.Getenv("LUMI_MYSQL_DSN")
 	if dsn == "" {
-		logger.Log.Error("LUMI_MYSQL_DSN 未设置")
+		log.Error("LUMI_MYSQL_DSN 未设置")
 	}
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
