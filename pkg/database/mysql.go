@@ -34,7 +34,7 @@ func init() {
 	// 加载环境变量
 	err := godotenv.Load()
 	if err != nil {
-		logger.Log.Error("无法加载 .env 文件", zap.Error(err))
+		logger.Log.Warn("无法加载 .env 文件", zap.Error(err))
 	}
 
 	dsn := os.Getenv("LUMI_MYSQL_DSN")

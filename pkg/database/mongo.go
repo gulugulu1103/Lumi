@@ -15,7 +15,6 @@ func init() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Warn("无法加载.env文件")
-		return
 	}
 
 	uri := os.Getenv("LUMI_MONGO_DSN")
