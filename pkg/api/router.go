@@ -15,6 +15,7 @@ func Serve() {
 
 	auth := v1.Group("/auth")
 	auth.Post("/register", handlers.RegisterHandler)
+	auth.Delete("/user", handlers.DeleteUserHandler)
 
 	// 启动 HTTP 服务器在 3000 端口
 	app.Listen(":3000")
