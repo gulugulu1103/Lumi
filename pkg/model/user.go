@@ -1,8 +1,8 @@
 package model
 
 import (
-	"Lumi/pkg/database"
 	"gorm.io/gorm"
+	"lumi/pkg/database"
 	"time"
 )
 

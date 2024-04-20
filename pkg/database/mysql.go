@@ -1,7 +1,6 @@
 package database
 
 import (
-	"Lumi/pkg/logger"
 	"fmt"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
@@ -9,6 +8,7 @@ import (
 	"gorm.io/gorm"
 	gorm_logger "gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
+	"lumi/pkg/logger"
 	"os"
 )
 
