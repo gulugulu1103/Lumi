@@ -14,7 +14,7 @@ var MongoDB *mongo.Database
 func init() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("无法加载.env文件")
+		log.Warn("无法加载.env文件")
 		return
 	}
 
