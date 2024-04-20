@@ -18,7 +18,7 @@ func RegisterHandler(c fiber.Ctx) (err error) {
 	}
 	logger.Log.Info("接收到注册请求", zap.Any("user", user))
 	db := database.DB
-	if err := db.Create(&user).Error; err != nil {
+	if err = db.Create(&user).Error; err != nil {
 		logger.Log.Error("注册失败", zap.Error(err))
 		return err
 	}
