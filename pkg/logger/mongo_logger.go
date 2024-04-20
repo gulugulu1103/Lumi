@@ -24,7 +24,6 @@ func init() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Warn("读取.env文件失败")
-		return
 	}
 	Log = newLogger()
 }
