@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Lumi/internal/util"
+	"Lumi/pkg/database"
 	"Lumi/pkg/logger"
 	"Lumi/pkg/model"
 	"log"
@@ -13,8 +13,8 @@ func init() {
 }
 
 func main() {
-	logger.Info("原神！启动！")
-	util.AutoMigrate()
+	logger.Log.Info("原神！启动！")
+	database.AutoMigrate()
 	user := &model.User{}
 	log.Print(user)
 }

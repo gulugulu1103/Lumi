@@ -1,15 +1,18 @@
 package logger
 
 import (
+	"Lumi/internal/util"
+	"github.com/gofiber/fiber/v3/log"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"
+	"time"
 )
 
-var log *zap.Logger
+var Log *zap.Logger
 
 func init() {
-	log = newLogger()
+	Log = newLogger()
 }
 
 // newLogger 创建并配置一个 zap.Logger 实例
@@ -17,7 +20,7 @@ func newLogger() *zap.Logger {
 	// 配置 zap
 	config := zap.NewProductionConfig()
 	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	config.EncoderConfig.TimeKey = "timestamp"
+	config.EncoderConfig.TimeKey = time.DateTime
 	config.EncoderConfig.MessageKey = "message"
 
 	// 设置日志输出位置
@@ -37,25 +40,16 @@ func newLogger() *zap.Logger {
 		panic(err)
 	}
 
+	// 挂载mongo写入
+	logger = logger.WithOptions(
+		zap.Hooks(
+			func(entry zapcore.Entry) error {
+				_, err := util.MongoDB.Collection("logs").InsertOne(nil, entry)
+				if err != nil {
+					log.Errorf("日志写入mongo失败", err.Error())
+				}
+				return err
+			}))
+
 	return logger
-}
-
-// Info logs a message at level Info on the standard logger.
-func Info(message string, fields ...zap.Field) {
-	log.Info(message, fields...)
-}
-
-// Error logs a message at level Error on the standard logger.
-func Error(message string, fields ...zap.Field) {
-	log.Error(message, fields...)
-}
-
-// Debug logs a message at level Debug on the standard logger.
-func Debug(message string, fields ...zap.Field) {
-	log.Debug(message, fields...)
-}
-
-// Warn logs a message at level Warn on the standard logger.
-func Warn(message string, fields ...zap.Field) {
-	log.Warn(message, fields...)
 }

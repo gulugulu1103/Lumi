@@ -1,4 +1,4 @@
-package util
+package database
 
 import (
 	"Lumi/pkg/logger"
@@ -9,7 +9,6 @@ import (
 	"gorm.io/gorm"
 	gorm_logger "gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"log"
 	"os"
 )
 
@@ -35,12 +34,12 @@ func init() {
 	// 加载环境变量
 	err := godotenv.Load()
 	if err != nil {
-		logger.Error("无法加载 .env 文件", zap.Error(err))
+		logger.Log.Error("无法加载 .env 文件", zap.Error(err))
 	}
 
-	dsn := os.Getenv("LUMI_DSN")
+	dsn := os.Getenv("LUMI_MYSQL_DSN")
 	if dsn == "" {
-		logger.Error("LUMI_DSN 未设置")
+		logger.Log.Error("LUMI_MYSQL_DSN 未设置")
 	}
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
@@ -53,20 +52,20 @@ func init() {
 	})
 
 	if err != nil {
-		log.Println("Failed to connect to database:", err)
+		logger.Log.Error("数据库连接失败", zap.Error(err))
 	}
 
 	return
 }
 
 func AutoMigrate() {
-	logger.Info("正在执行数据库迁移...", zap.Int("models", len(RegisterModels)))
+	logger.Log.Info("正在执行数据库迁移...", zap.Int("models", len(RegisterModels)))
 	for _, model := range RegisterModels {
 		modelType := fmt.Sprintf("%T", model) // 获取模型的类型名称
-		logger.Info("正在迁移模型:", zap.String("model", modelType))
+		logger.Log.Info("正在迁移模型:", zap.String("model", modelType))
 		if err := DB.AutoMigrate(model); err != nil {
-			logger.Error("模型迁移失败", zap.String("model", modelType), zap.Error(err))
+			logger.Log.Error("模型迁移失败", zap.String("model", modelType), zap.Error(err))
 		}
 	}
-	logger.Info("数据库迁移完成")
+	logger.Log.Info("数据库迁移完成")
 }

@@ -1,13 +1,13 @@
 package model
 
 import (
-	"Lumi/internal/util"
+	"Lumi/pkg/database"
 	"gorm.io/gorm"
 	"time"
 )
 
 func init() {
-	util.RegisterModels = append(util.RegisterModels, User{})
+	database.RegisterModels = append(database.RegisterModels, User{})
 }
 
 // User 定义了用户模型的基本结构
