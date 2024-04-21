@@ -35,7 +35,7 @@ func Serve() {
 		ListenerNetwork:   "tcp4", // 监听网络v4\v6
 	})
 	if err != nil {
-		log.Print(err)
+		log.Fatal("启动 HTTP 服务器失败")
 		return
 	}
 }
