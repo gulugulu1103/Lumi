@@ -1,4 +1,4 @@
-package handlers
+package user
 
 import (
 	"github.com/gofiber/fiber/v3"
@@ -18,14 +18,23 @@ func RegisterHandler(c fiber.Ctx) (err error) {
 	}
 	logger.Log.Info("接收到注册请求", zap.Any("user", user))
 	db := database.DB
-	if err = db.Create(&user).Error; err != nil {
+	tx := db.Begin() // 开启事务，否则ID会乱序
+	if err = tx.Create(&user).Error; err != nil {
+		c.JSON("注册失败")
+		tx.Rollback()
 		logger.Log.Error("注册失败", zap.Error(err))
+		return err
+	}
+	if err = tx.Commit().Error; err != nil {
+		c.JSON("注册失败，数据库出错")
+		tx.Rollback()
+		logger.Log.Error("注册失败，数据库出错", zap.Error(err))
 		return err
 	}
 	logger.Log.Info("注册成功", zap.Any("user", user))
 	c.JSON("注册成功")
 
-	return nil
+	return err
 }
 
 func DeleteUserHandler(c fiber.Ctx) (err error) {
