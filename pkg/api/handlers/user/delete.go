@@ -16,7 +16,7 @@ func DeleteUserHandler(c fiber.Ctx) (err error) {
 
 	user := model.User{Username: name}
 	if rows := database.DB.Where(&user).Delete(&user).RowsAffected; rows == 0 {
-		return c.JSON("用户名不能为空")
+		return c.JSON("不存在该用户")
 	}
 	logger.Log.Info("已删除用户", zap.Any("user", user))
 	return c.JSON("删除成功")
