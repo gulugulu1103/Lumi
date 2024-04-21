@@ -30,9 +30,9 @@ func Serve() {
 
 	// 启动 HTTP 服务器在 3000 端口
 	err := app.Listen(":3000", fiber.ListenConfig{
-		EnablePrefork:     true,   // 开启协程池
-		EnablePrintRoutes: true,   // 打印路由
-		ListenerNetwork:   "tcp4", // 监听网络v4\v6
+		//EnablePrefork:     true, // 开启协程池
+		EnablePrintRoutes: true,  // 打印路由
+		ListenerNetwork:   "tcp", // 监听网络v4\v6
 	})
 	if err != nil {
 		log.Fatal("启动 HTTP 服务器失败")
