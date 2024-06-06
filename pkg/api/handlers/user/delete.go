@@ -9,12 +9,12 @@ import (
 )
 
 func DeleteUserHandler(c fiber.Ctx) (err error) {
-	name := c.Query("name")
-	if name == "" {
-		return c.JSON("用户名不能为空")
+	deletedID := fiber.Query[int](c, "id")
+	if deletedID == 0 {
+		return c.JSON("用户ID不能为空")
 	}
 
-	user := model.User{Username: name}
+	user := model.User{ID: uint(deletedID)}
 	if rows := database.DB.Where(&user).Delete(&user).RowsAffected; rows == 0 {
 		return c.JSON("不存在该用户")
 	}

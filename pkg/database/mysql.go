@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"github.com/gofiber/fiber/v3/log"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
@@ -57,16 +56,4 @@ func init() {
 	}
 
 	return
-}
-
-func AutoMigrate() {
-	logger.Log.Info("正在执行数据库迁移...", zap.Int("models", len(RegisterModels)))
-	for _, model := range RegisterModels {
-		modelType := fmt.Sprintf("%T", model) // 获取模型的类型名称
-		logger.Log.Info("正在迁移模型:", zap.String("model", modelType))
-		if err := DB.AutoMigrate(model); err != nil {
-			logger.Log.Error("模型迁移失败", zap.String("model", modelType), zap.Error(err))
-		}
-	}
-	logger.Log.Info("数据库迁移完成")
 }

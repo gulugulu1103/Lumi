@@ -29,8 +29,16 @@ func Serve() {
 	auth.Delete("/user", user.DeleteUserHandler)
 
 	// 启动 HTTP 服务器在 3000 端口
+	app.Hooks().OnListen(func(listenData fiber.ListenData) error {
+		if fiber.IsChild() {
+			log.Println("子进程启动")
+			return nil
+		}
+		log.Println("启动！")
+		return nil
+	})
 	err := app.Listen(":3000", fiber.ListenConfig{
-		//EnablePrefork:     true, // 开启协程池
+		EnablePrefork:     true,  // 开启进程池
 		EnablePrintRoutes: true,  // 打印路由
 		ListenerNetwork:   "tcp", // 监听网络v4\v6
 	})

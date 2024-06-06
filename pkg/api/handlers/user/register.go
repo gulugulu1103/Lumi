@@ -6,18 +6,16 @@ import (
 	"lumi/pkg/database"
 	"lumi/pkg/logger"
 	"lumi/pkg/model"
-	"lumi/pkg/validator"
 )
 
 func RegisterHandler(c fiber.Ctx) (err error) {
-
 	var user model.User
 	if err = c.Bind().JSON(&user); err != nil {
 		logger.Log.Error("解析注册请求失败", zap.Error(err))
 		return c.JSON("参数错误")
 	}
 
-	if err = validator.Validate.Struct(&user); err != nil {
+	if err = user.RegisterValidate(); err != nil {
 		logger.Log.Error("参数错误", zap.Error(err))
 		return c.JSON("参数错误")
 	}
